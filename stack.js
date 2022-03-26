@@ -29,6 +29,7 @@ class Stack {
     if (this.top === null) {
       throw new Error('Stack Underflow');
     }
+
     let temp = new Node();
     temp = this.top;          // указываем на верхний (последний) узел
     this.top = this.top.link; // устанавливаем верхний адрес как адрес след. узла
@@ -60,18 +61,18 @@ class Stack {
   }
 
   static fromIterable(iterable) {
-    if (typeof iterable[Symbol.iterator] === 'function') {
+    if (typeof iterable[Symbol.iterator] !== 'function') {
       throw new Error('The entity is not iterable');
     }
 
-    const max = iterable;
-    let length = 0;
-    let result = [];
+    const result = new Stack();
+    this.max = iterable.length;
 
-    for (let i = 0; i <= max; i++) {
-      result = push(i);
-      length++;
+    for (let i = 0; i < iterable.length; i++) {
+      result.push(iterable[i]);
     }
+
+    return result;
   }
 }
 
@@ -83,3 +84,4 @@ function pushArray(array, ...items) {
 }
 
 module.exports = { Stack };
+
